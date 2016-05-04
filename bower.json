@@ -1,0 +1,16 @@
+{
+  "name": "Starter Template",
+  "authors": [
+    "vakho"
+  ],
+  "description": "",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "jquery": "^2.2.2",
+    "bootstrap": "^3.3.6",
+    "components-font-awesome": "^4.5.0"
+  }
+}

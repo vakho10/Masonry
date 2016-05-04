@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+    <style type="text/css">
+        .wrapper {
+            width: 970px;
+            margin: 0 auto;
+            background-color: burlywood;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div id="imgs"></div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery-1.12.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            
+            var root_width = $('#imgs').width();
+            
+            var numberOfImages = 20;
+            var imagesInRow = 4;
+            
+            var images = [];
+            for (var i = 0; i < numberOfImages; i++) {
+                var prop = {};
+                prop.width = Math.floor((Math.random() * 400) + 320); 
+                prop.height = Math.floor((Math.random() * 400) + 320); 
+                // prop.url = 'http://loremflickr.com/' + prop.width + '/' + prop.height;
+                prop.url = 'http://placehold.it/' + prop.width + 'X' + prop.height;
+                images.push(prop);
+            }
+            
+            // Loop rows
+            for (var i = 0; i < numberOfImages; i += imagesInRow) 
+            {
+                console.info('Iteration: ' + i);
+                
+                var heightSum = 0;
+                // var max = -1;
+                // var min = 100000; 
+                for (var j = i; j < i + imagesInRow; j++) {
+                    heightSum += images[j].height;
+                    // if (images[j].height > max) {
+                    //     max = images[j].height;
+                    // }
+                    // if (images[j].height < min) {
+                    //     min = images[j].height;
+                    // }               
+                }  
+                // console.info('max: ' + max + ', min: ' + min);         
+                var averageHeight = Math.round(heightSum / imagesInRow); // Rounded
+                console.info('avg: ' + averageHeight);
+                
+                
+                
+                
+                for (var j = i; j < i + imagesInRow; j++) {
+                    images[j].width = Math.round((averageHeight * images[j].width) / images[j].height);
+                    images[j].height = averageHeight;
+                    console.info(j + ' : ' + images[j].width + 'x' + images[j].height);
+                }
+                // Height is now optimal...
+                
+                
+                
+                
+                
+                
+                
+                
+                var sumOfWidths = 0;
+                for (var j = i; j < i + imagesInRow; j++) {
+                    sumOfWidths += images[j].width;                    
+                }
+                
+                
+                
+                var leftOver = sumOfWidths - root_width;                
+                var leftOverForEach = Math.round(leftOver / imagesInRow);
+                alert(leftOver + ' ' + leftOverForEach);
+                console.info(leftOverForEach);
+                    for (var j = i; j < i + imagesInRow; j++) {
+                    images[j].width -= leftOverForEach;
+                    images[j].height -= leftOverForEach;
+                }
+                
+                
+                // Recheck
+                sumOfWidths = 0;
+                for (var j = i; j < i + imagesInRow; j++) {
+                    sumOfWidths += images[j].width;                    
+                }
+                
+                leftOver = sumOfWidths - root_width;
+                images[i + imagesInRow - 1].width -= leftOver;
+                
+                for (var j = i; j < i + imagesInRow; j++) {                    
+                    console.info(j + ' = ' + images[j].width + 'x' + images[j].height);
+                }
+            }
+            
+            
+            // var min_width = 300;
+            
+            // var sumWithBefores = 0;
+            // var nextStart = 0;
+            
+            
+            
+            // for (var i = 0; i < numberOfImages; i++) {
+            //     images[i].height = Math.round((min_width * images[i].height) / images[i].width);
+            //     images[i].width = min_width;
+                
+            //     sumWithBefores += images[i].width;
+                
+            //     if (sumWithBefores > root_width) {
+                    
+            //         var addition = Math.round((sumWithBefores - root_width) / ((i + 1) - nextStart));
+            //         var secondCheckSum = 0;
+            //         for (var k = nextStart; k <= i; k++) {
+            //             images[k].width -= addition;
+            //             images[k].height -= addition;
+            //             images[k].id = nextStart;
+                        
+            //             secondCheckSum += images[k].width;
+            //         }
+                    
+            //         // Cdomileba
+            //         if (secondCheckSum > root_width) {
+            //             alert(secondCheckSum);
+            //             images[i].width -= (secondCheckSum - root_width);
+            //         }
+                    
+                    
+            //         nextStart = i + 1;
+            //         sumWithBefores = 0;
+            //     }
+            // }
+            
+            
+            for (var i = 0; i < numberOfImages; i++) {
+                $('#imgs').append('<img id="' + images[i].id + '" src="' + images[i].url + '" width="' + images[i].width  + '" height="' + images[i].height + '" />');
+            }
+            
+        });
+    </script>
+</body>
+
+</html>
